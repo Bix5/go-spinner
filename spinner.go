@@ -87,7 +87,7 @@ func (sp *Spinner) Stop() {
 		close(sp.runChan)
 		sp.clearLine()
 		// show cursor
-		fmt.Print("\033[?25h")
+		fmt.Print("")
 	})
 }
 
@@ -115,7 +115,7 @@ func (sp *Spinner) animate() {
 // write out spinner animation until runChan is closed
 func (sp *Spinner) writer() {
 	// hide cursor
-	fmt.Print("\033[?25l")
+	fmt.Print("")
 	sp.animate()
 	for {
 		select {
@@ -130,8 +130,8 @@ func (sp *Spinner) writer() {
 // workaround for Mac OS < 10 compatibility
 func (sp *Spinner) clearLine() {
 	if !sp.NoTty {
-		fmt.Printf("\033[2K")
+		fmt.Printf("")
 		fmt.Println()
-		fmt.Printf("\033[1A")
+		fmt.Printf("")
 	}
 }
