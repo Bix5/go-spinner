@@ -17,8 +17,7 @@ const (
 
 //var DefaultCharset = []string{"|", "/", "-", "\\"}
 var DefaultCharset = []string{
-	"⠈⠁", "⠈⠑", "⠈⠱", "⠈⡱", "⢀⡱", "⢄⡱", "⢄⡱", "⢆⡱",
-	"⢎⡱", "⢎⡰", "⢎⡠", "⢎⡀", "⢎⠁", "⠎⠁", "⠊⠁",
+	"|", "/", "-", "\\",
 }
 
 type Spinner struct {
