@@ -13,7 +13,7 @@ func GreenToBlue(x string) string {
 	blue := 100
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;0;255;%vm%v\033[0m\n", blue, v)
+		str += fmt.Sprintf("\033[38;2;0;255;%vm%v\033[0m", blue, v)
 		if blue != 255 {
 			blue += 25
 			if blue > 255 {
@@ -31,7 +31,7 @@ func YellowToOrange(x string) string {
 	green := 250
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m\n", green, v)
+		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m", green, v)
 
 		if green != 0 {
 			green -= 25
@@ -50,7 +50,7 @@ func GreenToYellow(x string) string {
 	red := 0
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;%v;255;0m%v\033[0m\n", red, v)
+		str += fmt.Sprintf("\033[38;2;%v;255;0m%v\033[0m", red, v)
 
 		if red < 200 {
 			red += 30
@@ -66,7 +66,7 @@ func PurpleToPink(x string) string {
 	red := 40
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;%v;0;220m%v\033[0m\n", red, v)
+		str += fmt.Sprintf("\033[38;2;%v;0;220m%v\033[0m", red, v)
 		if red != 255 {
 			red += 15
 			if red > 255 {
@@ -86,7 +86,7 @@ func BlackToWhite(x string) string {
 	blue := 20
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;%v;%v;%vm%v\033[0m\n", red, green, blue, string(v))
+		str += fmt.Sprintf("\033[38;2;%v;%v;%vm%v\033[0m", red, green, blue, string(v))
 
 		if red != 255 && green != 255 && blue != 255 {
 			red += 20
@@ -109,7 +109,7 @@ func PurpleToBlue(x string) string {
 	red := 110
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;%v;0;255m%v\033[0m\n", red, v)
+		str += fmt.Sprintf("\033[38;2;%v;0;255m%v\033[0m", red, v)
 
 		if red != 0 {
 			red -= 10
@@ -128,7 +128,7 @@ func BlueToCyan(x string) string {
 	green := 10
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;0;%v;255m%v\033[0m\n", green, v)
+		str += fmt.Sprintf("\033[38;2;0;%v;255m%v\033[0m", green, v)
 
 		if green != 0 {
 			green += 15
@@ -146,7 +146,7 @@ func RedToOrange(x string) string {
 	green := 10
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m\n", green, v)
+		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m", green, v)
 
 		if green != 0 {
 			green += 15
@@ -164,7 +164,7 @@ func PinkToRed(x string) string {
 	blue := 255
 
 	for _, v := range strings.Split(x, "\n") {
-		str += fmt.Sprintf("\033[38;2;255;0;%vm%v\033[0m\n", blue, v)
+		str += fmt.Sprintf("\033[38;2;255;0;%vm%v\033[0m", blue, v)
 
 		if blue != 0 {
 			blue -= 20
