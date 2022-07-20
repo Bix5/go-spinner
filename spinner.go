@@ -12,7 +12,7 @@ func GreenToBlue(x string) string {
 
 	blue := 100
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;0;255;%vm%v\033[0m", blue, v)
 		if blue != 255 {
 			blue += 25
@@ -30,7 +30,7 @@ func YellowToOrange(x string) string {
 
 	green := 250
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m", green, v)
 
 		if green != 0 {
@@ -49,7 +49,7 @@ func GreenToYellow(x string) string {
 
 	red := 0
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;%v;255;0m%v\033[0m", red, v)
 
 		if red < 200 {
@@ -65,7 +65,7 @@ func PurpleToPink(x string) string {
 
 	red := 40
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;%v;0;220m%v\033[0m", red, v)
 		if red != 255 {
 			red += 15
@@ -85,7 +85,7 @@ func BlackToWhite(x string) string {
 	green := 20
 	blue := 20
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;%v;%v;%vm%v\033[0m", red, green, blue, string(v))
 
 		if red != 255 && green != 255 && blue != 255 {
@@ -108,7 +108,7 @@ func PurpleToBlue(x string) string {
 
 	red := 110
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;%v;0;255m%v\033[0m", red, v)
 
 		if red != 0 {
@@ -127,7 +127,7 @@ func BlueToCyan(x string) string {
 
 	green := 10
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;0;%v;255m%v\033[0m", green, v)
 
 		if green != 0 {
@@ -145,7 +145,7 @@ func RedToOrange(x string) string {
 
 	green := 10
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m", green, v)
 
 		if green != 0 {
@@ -163,7 +163,7 @@ func PinkToRed(x string) string {
 
 	blue := 255
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		str += fmt.Sprintf("\033[38;2;255;0;%vm%v\033[0m", blue, v)
 
 		if blue != 0 {
@@ -182,7 +182,7 @@ func Randomness(x string) string {
 
 	str := ""
 
-	for _, v := range strings.Split(x, "\n") {
+	for _, v := range strings.Split(x) {
 		for _, v1 := range v {
 			str += fmt.Sprintf("\033[38;2;%v;%v;%vm%v\033[0m", rand.Intn(255), rand.Intn(255), rand.Intn(255), string(v1))
 		}
