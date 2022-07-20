@@ -186,7 +186,7 @@ func Randomness(x string) string {
 		for _, v1 := range v {
 			str += fmt.Sprintf("\033[38;2;%v;%v;%vm%v\033[0m", rand.Intn(255), rand.Intn(255), rand.Intn(255), string(v1))
 		}
-		str += ""
+		str += "c"
 	}
 
 	return str
