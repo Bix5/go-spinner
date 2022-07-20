@@ -1,137 +1,193 @@
-package spinner
+package fade
 
 import (
 	"fmt"
-	"io"
-	"os"
-	"sync"
+	"math/rand"
+	"strings"
 	"time"
-
-	"github.com/lucasepe/spinner/pkg/env"
 )
 
-const (
-	// 150ms per frame
-	DEFAULT_FRAME_RATE = time.Millisecond * 150
-)
+func GreenToBlue(x string) string {
+	str := ""
 
-//var DefaultCharset = []string{"|", "/", "-", "\\"}
-var DefaultCharset = []string{
-	"|", "/", "-", "\\",
-}
+	blue := 100
 
-type Spinner struct {
-	sync.Mutex
-	Text      string
-	Charset   []string
-	FrameRate time.Duration
-	runChan   chan struct{}
-	stopOnce  sync.Once
-	Output    io.Writer
-	NoTty     bool
-}
-
-// create spinner object
-func NewSpinner(title string) *Spinner {
-	sp := &Spinner{
-		Text:      title,
-		Charset:   DefaultCharset,
-		FrameRate: DEFAULT_FRAME_RATE,
-		runChan:   make(chan struct{}),
-	}
-	if !env.IsTerminal(os.Stderr) {
-		sp.NoTty = true
-	}
-	return sp
-}
-
-// start a new spinner, title can be an empty string
-func StartNew(title string) *Spinner {
-	return NewSpinner(title).Start()
-}
-
-// start spinner
-func (sp *Spinner) Start() *Spinner {
-	go sp.writer()
-	return sp
-}
-
-// set custom spinner frame rate
-func (sp *Spinner) SetText(s string) *Spinner {
-	sp.Lock()
-	sp.Text = s
-	sp.Unlock()
-	return sp
-}
-
-// set custom spinner frame rate
-func (sp *Spinner) SetSpeed(rate time.Duration) *Spinner {
-	sp.Lock()
-	sp.FrameRate = rate
-	sp.Unlock()
-	return sp
-}
-
-// set custom spinner character set
-func (sp *Spinner) SetCharset(chars []string) *Spinner {
-	sp.Lock()
-	sp.Charset = chars
-	sp.Unlock()
-	return sp
-}
-
-// stop and clear the spinner
-func (sp *Spinner) Stop() {
-	//prevent multiple calls
-	sp.stopOnce.Do(func() {
-		close(sp.runChan)
-		sp.clearLine()
-		// show cursor
-		fmt.Print("")
-	})
-}
-
-// spinner animation
-func (sp *Spinner) animate() {
-	var out string
-	for i := 0; i < len(sp.Charset); i++ {
-		select {
-		case <-sp.runChan:
-			return
-		default:
-			out = sp.Charset[i] + " " + sp.Text
-			switch {
-			case sp.Output != nil:
-				fmt.Fprint(sp.Output, out)
-			case !sp.NoTty:
-				fmt.Print(out)
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;0;255;%vm%v\033[0m\n", blue, v)
+		if blue != 255 {
+			blue += 25
+			if blue > 255 {
+				blue = 255
 			}
-			time.Sleep(sp.FrameRate)
-			sp.clearLine()
 		}
 	}
+
+	return str
 }
 
-// write out spinner animation until runChan is closed
-func (sp *Spinner) writer() {
-	// hide cursor
-	fmt.Print("")
-	sp.animate()
-	for {
-		select {
-		case <-sp.runChan:
-			return
-		default:
-			sp.animate()
+func YellowToOrange(x string) string {
+	str := ""
+
+	green := 250
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m\n", green, v)
+
+		if green != 0 {
+			green -= 25
+			if green < 0 {
+				green = 0
+			}
 		}
 	}
+
+	return str
 }
 
-// workaround for Mac OS < 10 compatibility
-func (sp *Spinner) clearLine() {
-	if !sp.NoTty {
-		fmt.Printf("")
-		fmt.Println()
-		fmt.Printf("")
+func GreenToYellow(x string) string {
+	str := ""
+
+	red := 0
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;%v;255;0m%v\033[0m\n", red, v)
+
+		if red < 200 {
+			red += 30
+		}
 	}
+
+	return str
+}
+
+func PurpleToPink(x string) string {
+	str := ""
+
+	red := 40
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;%v;0;220m%v\033[0m\n", red, v)
+		if red != 255 {
+			red += 15
+			if red > 255 {
+				red = 255
+			}
+		}
+	}
+
+	return str
+}
+
+func BlackToWhite(x string) string {
+	str := ""
+
+	red := 20
+	green := 20
+	blue := 20
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;%v;%v;%vm%v\033[0m\n", red, green, blue, string(v))
+
+		if red != 255 && green != 255 && blue != 255 {
+			red += 20
+			green += 20
+			blue += 20
+			if red > 255 && green > 255 && blue > 255 {
+				red = 255
+				green = 255
+				blue = 255
+			}
+		}
+	}
+
+	return str
+}
+
+func PurpleToBlue(x string) string {
+	str := ""
+
+	red := 110
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;%v;0;255m%v\033[0m\n", red, v)
+
+		if red != 0 {
+			red -= 10
+			if red < 0 {
+				red = 0
+			}
+		}
+	}
+
+	return str
+}
+
+func BlueToCyan(x string) string {
+	str := ""
+
+	green := 10
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;0;%v;255m%v\033[0m\n", green, v)
+
+		if green != 0 {
+			green += 15
+			if green < 0 {
+				green = 0
+			}
+		}
+	}
+	return str
+}
+
+func RedToOrange(x string) string {
+	str := ""
+
+	green := 10
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;255;%v;0m%v\033[0m\n", green, v)
+
+		if green != 0 {
+			green += 15
+			if green < 0 {
+				green = 0
+			}
+		}
+	}
+	return str
+}
+
+func PinkToRed(x string) string {
+	str := ""
+
+	blue := 255
+
+	for _, v := range strings.Split(x, "\n") {
+		str += fmt.Sprintf("\033[38;2;255;0;%vm%v\033[0m\n", blue, v)
+
+		if blue != 0 {
+			blue -= 20
+			if blue < 0 {
+				blue = 0
+			}
+		}
+	}
+
+	return str
+}
+
+func Randomness(x string) string {
+	rand.Seed(time.Now().Unix())
+
+	str := ""
+
+	for _, v := range strings.Split(x, "\n") {
+		for _, v1 := range v {
+			str += fmt.Sprintf("\033[38;2;%v;%v;%vm%v\033[0m", rand.Intn(255), rand.Intn(255), rand.Intn(255), string(v1))
+		}
+		str += "\n"
+	}
+
+	return str
 }
